@@ -1,6 +1,8 @@
 services:
   worker:
     container_name: "KurimuzonUserbot"
+    stdin_open: true
+    tty: true
     build:
       context: .
     stop_signal: SIGINT
