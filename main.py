@@ -59,7 +59,7 @@ async def main():
     try:
         git.Repo()
     except git.exc.InvalidGitRepositoryError:
-        repo = git.Repo.init()
+        repo = git.Repo.init('.', odbt=git.GitDB)
         origin = repo.create_remote(
             "origin", "https://github.com/lonsdale228/Kurimuzon-Userbot"
         )
