@@ -57,7 +57,7 @@ async def main():
     await app.storage.save()
 
     try:
-        git.Repo()
+        git.Repo('.', odbt=git.GitDB)
     except git.exc.InvalidGitRepositoryError:
         repo = git.Repo.init('.', odbt=git.GitDB)
         origin = repo.create_remote(
