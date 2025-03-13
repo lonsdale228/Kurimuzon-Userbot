@@ -29,7 +29,7 @@ clone_repo() {
     if [ -d "Kurimuzon-Userbot" ]; then
         cd Kurimuzon-Userbot || exit 2
     else
-        git clone https://github.com/KurimuzonAkuma/Kurimuzon-Userbot || exit 2
+        git clone https://github.com/lonsdale228/Kurimuzon-Userbot || exit 2
         cd Kurimuzon-Userbot || exit 2
     fi
 

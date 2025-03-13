@@ -192,7 +192,7 @@ async def _status(_, message: Message):
     current_version = upcoming_version - (
         len(list(git.Repo().iter_commits(f"{current_hash}..{upcoming}")))
     )
-    repo_link = "https://github.com/KurimuzonAkuma/Kurimuzon-Userbot"
+    repo_link = "https://github.com/lonsdale228/Kurimuzon-Userbot"
 
     result = f"<emoji id=5219903664428167948>🤖</emoji> <a href='{repo_link}'>Kurimuzon-Userbot</a> / "
     result += f"<a href='{repo_link}/commit/{current_hash}'>#{current_hash[:7]} ({current_version})</a>\n\n"
