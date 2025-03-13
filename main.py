@@ -56,19 +56,19 @@ async def main():
 
     await app.storage.save()
 
-    try:
-        git.Repo('.', odbt=git.GitDB)
-    except git.exc.InvalidGitRepositoryError:
-        repo = git.Repo.init('.', odbt=git.GitDB)
-        origin = repo.create_remote(
-            "origin", "https://github.com/lonsdale228/Kurimuzon-Userbot"
-        )
-        origin.fetch()
-        repo.create_head("master", origin.refs.master)
-        repo.heads.master.set_tracking_branch(origin.refs.master)
-        repo.heads.master.checkout(True)
-
-    await handle_restart(app)
+    # try:
+    #     git.Repo()
+    # except git.exc.InvalidGitRepositoryError:
+    #     repo = git.Repo.init()
+    #     origin = repo.create_remote(
+    #         "origin", "https://github.com/lonsdale228/Kurimuzon-Userbot"
+    #     )
+    #     origin.fetch()
+    #     repo.create_head("master", origin.refs.master)
+    #     repo.heads.master.set_tracking_branch(origin.refs.master)
+    #     repo.heads.master.checkout(True)
+    #
+    # await handle_restart(app)
 
     for job in scheduler_jobs:
         scheduler.add_job(
