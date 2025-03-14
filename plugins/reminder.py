@@ -25,13 +25,15 @@ async def reminder(client: Client, message: Message):
     # possible_text2 = "remind to drink a bear / 2d1h10m30s / 6"
     # possible_text2 = "remind to drink a bear / 2d30s / 6"
 
+
+
     try:
         remind_text, interval_raw_text, times = message.text.split("/")
     except ValueError:
-        await message.edit("Format error: please use '<text> / <interval> / <times>'")
+        await message.edit("Format error: please use 'text / interval / times'")
         return
 
-    remind_text = remind_text.strip()
+    remind_text: str = remind_text.split(".reminder")[1].strip()
     interval_raw_text = interval_raw_text.strip()
     try:
         times = int(times.strip())
@@ -75,6 +77,8 @@ async def reminder(client: Client, message: Message):
         now = datetime.datetime.now(tz=pytz.timezone("Europe/Kyiv"))
         scheduled_time = now + datetime.timedelta(seconds=interval_seconds * i)
         await client.send_message(message.chat.id, remind_text, schedule_date=scheduled_time)
+
+    await message.delete()
 
 module = modules_help.add_module("reminder", __file__)
 module.add_command("reminder", "Added reminder to following user with interval in H:M or H:M:S", "[reply]*")
