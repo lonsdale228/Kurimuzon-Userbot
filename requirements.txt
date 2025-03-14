@@ -6,4 +6,5 @@ kurigram
 psutil
 tgcrypto
 qrcode
+cryptography
 pytz==2025.1
