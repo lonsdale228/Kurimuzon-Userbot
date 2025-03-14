@@ -64,7 +64,7 @@ async def reminder(client: Client, message: Message):
         now = datetime.datetime.now(tz=pytz.timezone("Europe/Kyiv"))
         for i in range(times):
             scheduled_time = now + datetime.timedelta(days=i)
-            scheduled_time = scheduled_time.replace(day=day, hour=hour, minute=minute, second=second)
+            scheduled_time = scheduled_time.replace(hour=hour, minute=minute, second=second)
             if scheduled_time < now:
                 scheduled_time += datetime.timedelta(days=1)
 
