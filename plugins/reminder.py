@@ -1,6 +1,7 @@
 import datetime
 import re
 
+
 import pytz
 from pyrogram import Client, enums, filters
 from pyrogram.types import Message
@@ -13,6 +14,13 @@ from utils.misc import modules_help
     ~filters.scheduled & command(["remind"]) & filters.me & ~filters.forwarded
 )
 async def reminder(client: Client, message: Message):
+
+    if message.text == ".remind clear":
+        messages = await client.get_scheduled_messages(message.chat.id)
+        for message in messages:
+            await message.delete()
+        await message.delete()
+        return
     try:
         remind_text, interval_raw_text, times = message.text.split("/")
     except ValueError:
