@@ -27,6 +27,11 @@ async def reminder(client: Client, message: Message):
         await message.edit("Invalid number of times provided.")
         return
 
+    cron_mode = False
+    if interval_raw_text[0]=='c':
+        cron_mode = True
+        interval_raw_text = interval_raw_text[1:].strip()
+
     pattern = r"(\d+)([dhms])"
     matches = re.findall(pattern, interval_raw_text)
     if not matches:
@@ -42,10 +47,33 @@ async def reminder(client: Client, message: Message):
         await message.edit("Interval must be greater than zero.")
         return
 
-    for i in range(1, times + 1):
+    day, hour, minute, second = 0, 0, 0, 0
+    for value, unit in matches:
+        match unit:
+            case "d":
+                day = int(value)
+            case "h":
+                hour = int(value)
+            case "m":
+                minute = int(value)
+            case "s":
+                second = int(value)
+
+
+    if cron_mode:
         now = datetime.datetime.now(tz=pytz.timezone("Europe/Kyiv"))
-        scheduled_time = now + datetime.timedelta(seconds=interval_seconds * i)
-        await client.send_message(message.chat.id, remind_text, schedule_date=scheduled_time)
+        for i in range(times):
+            scheduled_time = now + datetime.timedelta(days=i)
+            scheduled_time = scheduled_time.replace(day=day, hour=hour, minute=minute, second=second)
+            if scheduled_time < now:
+                scheduled_time += datetime.timedelta(days=1)
+
+            await client.send_message(message.chat.id, remind_text, schedule_date=scheduled_time)
+    else:
+        for i in range(1, times + 1):
+            now = datetime.datetime.now(tz=pytz.timezone("Europe/Kyiv"))
+            scheduled_time = now + datetime.timedelta(seconds=interval_seconds * i)
+            await client.send_message(message.chat.id, remind_text, schedule_date=scheduled_time)
 
     await message.delete()
 
