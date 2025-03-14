@@ -62,12 +62,11 @@ async def reminder(client: Client, message: Message):
 
     if cron_mode:
         now = datetime.datetime.now(tz=pytz.timezone("Europe/Kyiv"))
+        first_reminder_time = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        if now > first_reminder_time:
+            first_reminder_time += datetime.timedelta(days=1)
         for i in range(times):
-            scheduled_time = now + datetime.timedelta(days=i)
-            scheduled_time = scheduled_time.replace(hour=hour, minute=minute, second=second)
-            if scheduled_time < now:
-                scheduled_time += datetime.timedelta(days=1)
-
+            scheduled_time = first_reminder_time + datetime.timedelta(days=i)
             await client.send_message(message.chat.id, remind_text, schedule_date=scheduled_time)
     else:
         for i in range(1, times + 1):
