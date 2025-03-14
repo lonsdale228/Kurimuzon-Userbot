@@ -1,9 +1,10 @@
-aiohttp
-apscheduler
-environs
+aiohttp==3.11.13
+apscheduler==3.11.0
+environs==14.1.1
 GitPython
 kurigram
 psutil
 tgcrypto
 qrcode
 cryptography
+pytz==2025.1
