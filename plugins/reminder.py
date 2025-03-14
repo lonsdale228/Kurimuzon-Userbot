@@ -17,8 +17,8 @@ async def reminder(client: Client, message: Message):
 
     if message.text == ".remind clear":
         messages = await client.get_scheduled_messages(message.chat.id)
-        for message in messages:
-            await message.delete()
+        for msg in messages:
+            await msg.delete()
         await message.delete()
         return
     try:
