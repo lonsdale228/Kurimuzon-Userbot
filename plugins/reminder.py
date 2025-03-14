@@ -19,7 +19,7 @@ async def reminder(client: Client, message: Message):
         await message.edit("Format error: please use 'text / interval / times'")
         return
 
-    remind_text: str = remind_text.split(".reminder")[1].strip()
+    remind_text: str = remind_text.split(".remind")[1].strip()
     interval_raw_text = interval_raw_text.strip()
     try:
         times = int(times.strip())
